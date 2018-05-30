@@ -1,0 +1,154 @@
+{% extends "AppBundle::clientlayout.html.twig" %}
+{% block title %}
+    Horario
+{% endblock %}
+
+{% block mystyles %}
+    <link href="{{ asset('bundles/app/plugins/owl/assets/owl.carousel.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/plugins/owl/assets/owl.theme.default.min.css')}}" rel="stylesheet">
+    {% endblock %}
+
+
+
+{% block contenido %}
+<div class="row">
+    <div class="col-md-6">
+        <div style="text-align: center;margin: 0 auto">
+            <img src="{{ asset('bundles/app/site/img/logo_fcb big.png') }} ">
+        </div>
+
+    </div>
+
+
+    <div class="col-md-6">
+        <div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="owl-carousel owl-theme">
+                {% for media in medias %}
+                    <div style="text-align: center;margin: 0 auto">
+{#{{ dump(media) }}#}
+
+                        {% if 'video' in media.contentType  %}
+
+
+                            {#<div class="item-video">#}
+                                {#<iframe width="950" height="900" src="">#}
+                                {#</iframe>#}
+                            {#</div>#}
+                      <video width="950" height="900" src="{%  path media, 'reference' %}" autobuffer controls autoplay></video>
+
+                        {% else %}
+                            {% media  media, 'big' with {'class': 'myclass'} %}
+                        {% endif %}
+
+
+                       </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block srcjavascripts %}
+    <script src="{{ asset('bundles/app/plugins/owl/owl.carousel.min.js')}}"></script>
+{% endblock %}
+
+{% block javascripts_inline %}
+
+    <script>
+        var owl=$('.owl-carousel').owlCarousel({
+
+            loop:true,
+            margin:10,
+            nav:true,
+            navText:['',''],
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            },
+            afterAction: function(current) {
+                current.find('video').get(0).play();
+            },
+            onTranslate: function(current) {
+
+            }
+            ,
+            video:true,
+            dots: false,
+            videoHeight: 900,
+            videoWidth: 950,
+            autoplay:true,
+            autoplayTimeout:180000
+
+        });
+
+        owl.on('mousewheel', '.owl-stage', function (e) {
+            if (e.deltaY>0) {
+                owl.trigger('next.owl');
+            } else {
+                owl.trigger('prev.owl');
+            }
+            e.preventDefault();
+        });
+
+        owl.on('changed.owl.carousel',function(property){
+            var current = property.item.index;
+            var src = $(property.target).find(".owl-item").eq(current).find("img").attr('src');
+            if(src==undefined){
+               var v = $(property.target).find(".owl-item").eq(current).find("video");
+                v.get(0).play()
+            }else{
+                $('.owl-item').find('video').each(function() {
+                    this.pause();
+                });
+            }
+        });
+
+    </script>
+
+
+    <script >
+
+        $(document).ready(function(){
+            $.ajax({
+                type: 'GET',
+                url:'http://localhost/tutiempo/xml/30994.xml',
+                success: function (xml) {
+                    $(xml).find('pronostico_horas').find('hora').each(function(){
+                        var hora=$(this).find('hora_datos').text();
+                        var horaactual=
+                        if(hora=='11:00')
+                                console.log($(this).find('temperatura').text());
+
+                    });
+
+
+                },
+                error: function (req, stat, err) {
+                    console.log(err);
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}

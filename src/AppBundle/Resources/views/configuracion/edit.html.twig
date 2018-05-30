@@ -1,0 +1,39 @@
+
+{% extends "AppBundle::adminlayout.html.twig" %}
+{% block title %}
+    Admin
+{% endblock %}
+  {% block mystyles %}
+      <style>
+          .box-body{
+
+              width: 50% !important;
+          }
+
+      </style>
+
+  {% endblock %}
+{% block contentheader %}
+    Editar Configuracion
+{% endblock %}
+
+{% block migas %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path("adminStart") }}"><i class="fa fa-folder"></i> Administrador</a></li>
+        <li><a href="#">Editar Configuracion</a></li>
+
+    </ol>
+{% endblock %}
+
+{% block contenido %}
+    <div class="box-body">
+    {{ form_start(edit_form) }}
+        {{ form_rest(edit_form) }}
+        <br>
+    <input type="submit" value="Salvar" class="btn btn-block btn-primary"/>
+    {{ form_end(edit_form) }}
+
+    </div>
+
+
+{% endblock %}

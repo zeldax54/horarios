@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Configuracions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Urlxmlphp</th>
+                <th>Urlxmlclima</th>
+                <th>Urlxmlcintillo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for configuracion in configuracions %}
+            <tr>
+                <td><a href="{{ path('admin_show', { 'id': configuracion.id }) }}">{{ configuracion.id }}</a></td>
+                <td>{{ configuracion.urlxmlphp }}</td>
+                <td>{{ configuracion.urlxmlclima }}</td>
+                <td>{{ configuracion.urlxmlcintillo }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_show', { 'id': configuracion.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_edit', { 'id': configuracion.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_new') }}">Create a new configuracion</a>
+        </li>
+    </ul>
+{% endblock %}

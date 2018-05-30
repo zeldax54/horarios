@@ -1,0 +1,43 @@
+{% extends "AppBundle::adminlayout.html.twig" %}
+{% block title %}
+    404
+{% endblock %}
+{% block contentheader %}
+    404
+{% endblock %}
+
+{% block migas %}
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-folder"></i> Administrador</a></li>
+        <li><a href="#">NOT FOUND __ 404</a></li>
+
+    </ol>
+{% endblock %}
+
+{% block contenido %}
+    <div class="error-page">
+        <h2 class="headline text-yellow"> 404</h2>
+
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-yellow"></i> Oops! Pagina no encontrada.</h3>
+
+            <p>
+                No hemos podido localizar la pagina.
+                Usted puede <a href="{{ path("adminStart")}}">retornar a la pagina de inicio</a> o utilizar nuestro buscador.
+            </p>
+
+            <form class="search-form">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search">
+
+                    <div class="input-group-btn">
+                        <button type="submit" name="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.input-group -->
+            </form>
+        </div>
+        <!-- /.error-content -->
+    </div>
+{% endblock %}

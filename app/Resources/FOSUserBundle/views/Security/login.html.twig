@@ -1,0 +1,47 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+    {% trans_default_domain 'FOSUserBundle' %}
+
+    {% block fos_user_content %}
+        {% if error %}
+            <div> <span><b style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</b></span></div>
+        {% endif %}
+
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+            <div class="formgroup">
+                <label for="username">{{ 'Usuario o Email'|trans }}</label>
+                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            </div>
+
+            <div class="form-group has-feedback">
+                <label for="password">{{ 'Contraseña'|trans }}</label>
+                <input class="form-control" placeholder="Password" type="password" id="password" name="_password" required="required" />
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+             </div>
+
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> Recordar
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat" id="_submit" name="_submit" >Entrar</button>
+                </div>
+                <!-- /.col -->
+            </div>
+
+
+
+        </form>
+        <div>
+            <a href="#">Olvidé mi contraseña</a><br>
+            <a href="#" class="text-center">Registrar nuevo usuario</a>
+
+        </div>
+    {% endblock fos_user_content %}

@@ -1,0 +1,9 @@
+cache/
+log/
+.idea/
+*.log
+var/log
+var/cache
+/log
+.idea/workspace.xml
+

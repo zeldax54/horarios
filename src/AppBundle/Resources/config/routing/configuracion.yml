@@ -1,0 +1,24 @@
+admin_configuracion_index:
+    path:     /admin/configuracion
+    defaults: { _controller: "AppBundle:Configuracion:index" }
+    methods:  GET
+
+admin_configuracion_show:
+    path:     admin/configuracion/{id}/show
+    defaults: { _controller: "AppBundle:Configuracion:show" }
+    methods:  GET
+
+admin_configuracion_new:
+    path:     admin/configuracion/new
+    defaults: { _controller: "AppBundle:Configuracion:new" }
+    methods:  [GET, POST]
+
+admin_configuracion_edit:
+    path:     admin/configuracion/{id}/edit
+    defaults: { _controller: "AppBundle:Configuracion:edit" }
+    methods:  [GET, POST]
+
+admin_configuracion_delete:
+    path:     admin/configuracion//{id}/delete
+    defaults: { _controller: "AppBundle:Configuracion:delete" }
+    methods:  DELETE
