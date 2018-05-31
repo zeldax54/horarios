@@ -48,6 +48,13 @@ class Configuracion
      */
     private $sliderelemntTime;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="climaelemntTime", type="integer")
+     */
+    private $climaelemntTime;
+
 
 
 
@@ -155,5 +162,29 @@ class Configuracion
     public function getSliderelemntTime()
     {
         return $this->sliderelemntTime;
+    }
+
+    /**
+     * Set climaelemntTime
+     *
+     * @param integer $climaelemntTime
+     *
+     * @return Configuracion
+     */
+    public function setClimaelemntTime($climaelemntTime)
+    {
+        $this->climaelemntTime = $climaelemntTime;
+
+        return $this;
+    }
+
+    /**
+     * Get climaelemntTime
+     *
+     * @return integer
+     */
+    public function getClimaelemntTime()
+    {
+        return $this->climaelemntTime;
     }
 }

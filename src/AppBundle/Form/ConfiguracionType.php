@@ -42,6 +42,15 @@ class ConfiguracionType extends AbstractType
                     'class'=>'form-control'
                 )
             ))
+            ->add('climaelemntTime',null,array(
+                'label'=>'Minutos de refresco de la información del clima',
+                'attr'=>array(
+                    'required'=>true,
+                    'class'=>'form-control'
+                )
+            ))
+
+
         ;
     }/**
      * {@inheritdoc}

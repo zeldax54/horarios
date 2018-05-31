@@ -12,7 +12,7 @@
 
 {% block contenido %}
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" id="firsttop">
         <div style="text-align: center;margin: 0 auto">
             <img src="{{ asset('bundles/app/site/img/logo_fcb big.png') }} ">
         </div>
@@ -20,11 +20,15 @@
     </div>
 
 
-    <div class="col-md-6">
-        <div>
-
+    <div class="col-md-6" id="secondtop">
+        <div class="row">
+            <div id="tiempodiv" class="col-md-10">  </div>
+            <div id="horadiv" style="text-align: center;background: #303030;" class="col-md-2">  </div>
 
         </div>
+
+
+
 
     </div>
 
@@ -58,6 +62,9 @@
 
         </div>
 
+    </div>
+    <div class="row">
+        <marquee behavior="" direction="left"><a href="d">MMMMMMMM</a></marquee>
     </div>
 {% endblock %}
 
@@ -97,7 +104,7 @@
             videoHeight: 900,
             videoWidth: 950,
             autoplay:true,
-            autoplayTimeout:180000
+            autoplayTimeout:1000*60*parseInt('{{ configuracion.sliderelemntTime }}')
 
         });
 
@@ -129,26 +136,77 @@
     <script >
 
         $(document).ready(function(){
-            $.ajax({
-                type: 'GET',
-                url:'http://localhost/tutiempo/xml/30994.xml',
-                success: function (xml) {
-                    $(xml).find('pronostico_horas').find('hora').each(function(){
-                        var hora=$(this).find('hora_datos').text();
-                        var horaactual=
-                        if(hora=='11:00')
-                                console.log($(this).find('temperatura').text());
-
-                    });
 
 
-                },
-                error: function (req, stat, err) {
-                    console.log(err);
-                }
-            });
+            function UpdateHora(){
+                var fechahoy=new Date();
+                var horaactual=parseInt(fechahoy.getHours());
+                var horadiv=$('#horadiv');
+                horadiv.empty();
+                horadiv.append('<label style="color: white;font-size: 19px;"><i class="fa fa-clock-o"></i> '+horaactual+':'+fechahoy.getMinutes()+':'+fechahoy.getSeconds()+' </label>');
+                horadiv.css('margin-top','3%');
+                horadiv.css('text-align','center');
+            }
+            window.setInterval(function(){
+                UpdateHora();
+            }, 1000);
+
+            //Clima
+            function UpdateClima(){
+                var climaUrl='{{ configuracion.urlxmlclima }}';
+                $.ajax({
+                    type: 'GET',
+                    url:climaUrl,
+                    success: function (xml) {
+                        var fechahoy=new Date();
+
+                        var horaactual=parseInt(fechahoy.getHours());
+
+                        var diactual=parseInt(fechahoy.getUTCDate());
+
+                        $('#secondtop').height($('#firsttop').height());
+                        var tutiempodiv=$('#tiempodiv');
+                        var tiempoact=false;
+
+                        $(xml).find('pronostico_horas').find('hora').each(function(){
+                            var hora=parseInt($(this).find('hora_datos').text());
+                            var dia=parseInt($(this).find('fecha').text().split('-')[2]);
+                            if(dia==diactual && hora==horaactual){
+                                tutiempodiv.empty();
+                                tutiempodiv.append('<img src="'+$(this).find('icono').text()+'">'+
+                                        '<span style="margin-left: 10px;font-size: 136%;">'+$(this).find('temperatura').text()+' °C</span>');
+                                tiempoact=true;
+                            }
+                        });// end foreach
+                        if(tiempoact==false){
+                            tutiempodiv.empty();
+                            tutiempodiv.append('<small class="label label-warning"> No hay comunicación con el servicio del tiempo.</small>');
+
+                        }
+                        tutiempodiv.css('margin-top','5%');
+                        tutiempodiv.css('text-align','center');
+
+
+                    },
+                    error: function (req, stat, err) {
+                        console.log(err);
+                    }
+                });
+
+            }
+            var minutosClima=parseInt('{{ configuracion.climaelemntTime }}');
+            UpdateClima();
+            window.setInterval(function(){
+                UpdateClima();
+            }, 1000*60*minutosClima);
+             //end clima
+
+
+
+
 
         });
+
     </script>
 
 {% endblock %}

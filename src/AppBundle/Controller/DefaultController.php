@@ -48,7 +48,8 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle::horario.html.twig', [
-            'medias'=>$medias
+            'medias'=>$medias,
+            'configuracion'=>$configuracion
         ]);
 
     }
