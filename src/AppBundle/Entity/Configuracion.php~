@@ -55,6 +55,20 @@ class Configuracion
      */
     private $climaelemntTime;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="noticiasUpdateTime", type="integer")
+     */
+    private $noticiasUpdateTime;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="horariosUpdateTime", type="integer")
+     */
+    private $horariosUpdateTime;
+
 
 
 
@@ -162,5 +176,53 @@ class Configuracion
     public function getSliderelemntTime()
     {
         return $this->sliderelemntTime;
+    }
+
+    /**
+     * Set climaelemntTime
+     *
+     * @param integer $climaelemntTime
+     *
+     * @return Configuracion
+     */
+    public function setClimaelemntTime($climaelemntTime)
+    {
+        $this->climaelemntTime = $climaelemntTime;
+
+        return $this;
+    }
+
+    /**
+     * Get climaelemntTime
+     *
+     * @return integer
+     */
+    public function getClimaelemntTime()
+    {
+        return $this->climaelemntTime;
+    }
+
+    /**
+     * Set noticiasUpdateTime
+     *
+     * @param integer $noticiasUpdateTime
+     *
+     * @return Configuracion
+     */
+    public function setNoticiasUpdateTime($noticiasUpdateTime)
+    {
+        $this->noticiasUpdateTime = $noticiasUpdateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get noticiasUpdateTime
+     *
+     * @return integer
+     */
+    public function getNoticiasUpdateTime()
+    {
+        return $this->noticiasUpdateTime;
     }
 }

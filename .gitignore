@@ -2,8 +2,9 @@ cache/
 log/
 .idea/
 *.log
-var/log
-var/cache
+var/log/
+var/cache/
+var/sessions/
 /log
 .idea/workspace.xml
 

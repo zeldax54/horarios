@@ -22,7 +22,8 @@
 
     <div class="col-md-6" id="secondtop">
         <div class="row">
-            <div id="tiempodiv" class="col-md-10">  </div>
+            <div id="tiempodiv" class="col-md-5">  </div>
+            <div id="tiempodiadiv" class="col-md-5" style="text-align: center;">  </div>
             <div id="horadiv" style="text-align: center;background: #303030;" class="col-md-2">  </div>
 
         </div>
@@ -49,7 +50,7 @@
                                 {#<iframe width="950" height="900" src="">#}
                                 {#</iframe>#}
                             {#</div>#}
-                      <video width="950" height="900" src="{%  path media, 'reference' %}" autobuffer controls autoplay></video>
+                      <video  src="{%  path media, 'reference' %}" autobuffer controls autoplay></video>
 
                         {% else %}
                             {% media  media, 'big' with {'class': 'myclass'} %}
@@ -63,9 +64,14 @@
         </div>
 
     </div>
-    <div class="row">
-        <marquee behavior="" direction="left"><a href="d">MMMMMMMM</a></marquee>
-    </div>
+
+        <div class="row">
+            <div class="" role="alert" id="marqcontainer">
+                <strong><i class="fa fa-newspaper-o"></i> Noticias</strong>
+                 <marquee id="mymarquee"></marquee>
+            </div>
+
+<div style="text-align: center;margin: 0 auto"></div>
 {% endblock %}
 
 {% block srcjavascripts %}
@@ -104,7 +110,7 @@
             videoHeight: 900,
             videoWidth: 950,
             autoplay:true,
-            autoplayTimeout:1000*60*parseInt('{{ configuracion.sliderelemntTime }}')
+            autoplayTimeout: 1000*60*parseInt('{{ configuracion.sliderelemntTime }}')
 
         });
 
@@ -138,7 +144,10 @@
         $(document).ready(function(){
 
 
-            function UpdateHora(){
+
+        });
+
+         function UpdateHora(){
                 var fechahoy=new Date();
                 var horaactual=parseInt(fechahoy.getHours());
                 var horadiv=$('#horadiv');
@@ -151,18 +160,28 @@
                 UpdateHora();
             }, 1000);
 
+function createDateAsUTC(date) {
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+}
+
             //Clima
             function UpdateClima(){
                 var climaUrl='{{ configuracion.urlxmlclima }}';
+
                 $.ajax({
                     type: 'GET',
                     url:climaUrl,
                     success: function (xml) {
                         var fechahoy=new Date();
+                        fechahoy=createDateAsUTC(fechahoy);
 
-                        var horaactual=parseInt(fechahoy.getHours());
 
+                     //   var horaactual=parseInt(fechahoy.getHours());
+                        var horaactual=parseInt(new Date().getHours());
                         var diactual=parseInt(fechahoy.getUTCDate());
+
+                        console.log(horaactual+" hora");
+                        console.log(diactual +" dia");
 
                         $('#secondtop').height($('#firsttop').height());
                         var tutiempodiv=$('#tiempodiv');
@@ -171,6 +190,13 @@
                         $(xml).find('pronostico_horas').find('hora').each(function(){
                             var hora=parseInt($(this).find('hora_datos').text());
                             var dia=parseInt($(this).find('fecha').text().split('-')[2]);
+
+                         console.log(fechahoy.getUTCDate());
+                         console.log(dia);
+                         console.log(diactual);
+                         console.log(hora);
+                         console.log(horaactual);
+                         console.log('--------------');
                             if(dia==diactual && hora==horaactual){
                                 tutiempodiv.empty();
                                 tutiempodiv.append('<img src="'+$(this).find('icono').text()+'">'+
@@ -180,11 +206,48 @@
                         });// end foreach
                         if(tiempoact==false){
                             tutiempodiv.empty();
-                            tutiempodiv.append('<small class="label label-warning"> No hay comunicación con el servicio del tiempo.</small>');
+                            tutiempodiv.append('<small class="label label-warning"> Sin servicio del tiempo para esta hora.</small>');
 
                         }
+
+                        //tiempo dia
+                                console.log('Tiempo dia');
+                        var booltiempodia=false;
+                        var div=$('#tiempodiadiv');
+                        $(xml).find('pronostico_dias').find('dia').each(function(){
+                            var diactual=parseInt(fechahoy.getUTCDate());
+                            var mesactual=parseInt(fechahoy.getMonth())+1;
+                            var dia=parseInt($(this).find('fecha').text().split('-')[2]);
+                            var mes=parseInt($(this).find('fecha').text().split('-')[1]);
+
+                            console.log(dia);
+                            console.log(diactual);
+                            console.log(mes);
+                            console.log(mesactual);
+                            console.log('_________________');
+                            if(dia==diactual && mes==mesactual){
+                                div.empty();
+                                div.append(
+                                        '<img src="'+$(this).find('icono').text()+'" width="20%"><br>'+
+                                        '<span style="margin-left: 10px;font-size: 136%;color: red">'+$(this).find('temp_maxima').text()+'°</span>'+
+                                        '<span style="margin-left: 10px;font-size: 136%;">|</span>'+
+                                        '<span style="margin-left: 10px;font-size: 136%;color:blue">'+$(this).find('temp_minima').text()+'°</span>');
+                                booltiempodia=true;
+
+                            }
+
+                        });
+
+                        if(booltiempodia==false){
+                            div.empty();
+                            div.append('<small class="label label-warning"> Sin servicio del tiempo para el dia.</small>');
+
+                        }
+
+
                         tutiempodiv.css('margin-top','5%');
-                        tutiempodiv.css('text-align','center');
+                        tutiempodiv.css('text-align','right');
+
 
 
                     },
@@ -202,10 +265,62 @@
              //end clima
 
 
+            //noticias
+           function UpdateNoticias(){
+
+//           $('#mymarquee').on('bounce',function(){
+//
+//           alert('asd');
+//           });
+               var noticiasUrl='{{ configuracion.urlxmlcintillo }}';
+               $.ajax({
+                   type: 'GET',
+                   url:noticiasUrl,
+                   success: function (xml) {
+                       var noticiasclear='';
+                       $(xml).find('channel').find('title').each(function(){
+                          noticiasclear+=$(this).text()+' --- ';
+                         });
+                       $('#marqcontainer').empty().append('  <strong><i class="fa fa-newspaper-o"></i> Noticias</strong><marquee id="mymarquee">'+'<p id="pmarquee" style="font-family: Impact; font-size: 18pt">'+noticiasclear+'</p>'+'</marquee>')
+
+                   },
+                   error: function (req, stat, err) {
+                     //  console.log(err);
+                   }
+               });
+           }
+            var minutosnoticias=parseInt('{{ configuracion.noticiasUpdateTime }}');
+            UpdateNoticias();
+            window.setInterval(UpdateNoticias(), 1000*60*minutosnoticias);
+            //end noticias
+
+            //Horarios -> de los horarios que traiga del servicio, solo tomar los del dia actual(hoy)
+
+            function UpdateHorarios(){
+
+            // jQuery cross domain ajax
 
 
+              var horariosUrl='{{ configuracion.urlxmlphp }}';
+               $.ajax({
+                   type: 'GET',
+                   crossDomain: true,
+                   url:horariosUrl,
+                   success: function (xml) {
+                       $(xml).find('channel').find('title').each(function(){
+                          console.log($(this));
 
-        });
+                       });
+
+                   },
+                   error: function (req, stat, err) {
+                       console.log(err);
+                   }
+               });
+            }
+             var minutoshorarios=parseInt('{{ configuracion.horariosUpdateTime }}');
+             window.setInterval(UpdateHorarios(), 1000*60*minutoshorarios);
+
 
     </script>
 

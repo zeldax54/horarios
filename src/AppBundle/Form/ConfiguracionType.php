@@ -35,8 +35,17 @@ class ConfiguracionType extends AbstractType
                     'class'=>'form-control'
                 )
             ))
+
+            ->add('horariosUpdateTime',null,array(
+                'label'=>'Minutos de refresco de la información de los horarios',
+                'attr'=>array(
+                    'required'=>true,
+                    'class'=>'form-control'
+                )
+            ))
+
             ->add('sliderelemntTime',null,array(
-                'label'=>'Minutos que se muestran los elementos del slider',
+                'label'=>'Minutos que se muestran los elementos del slider de información',
                 'attr'=>array(
                     'required'=>true,
                     'class'=>'form-control'
@@ -49,6 +58,19 @@ class ConfiguracionType extends AbstractType
                     'class'=>'form-control'
                 )
             ))
+
+          ->add('noticiasUpdateTime',null,array(
+                'label'=>'Minutos de refresco de la información de las Noticias',
+                'attr'=>array(
+                    'required'=>true,
+                    'class'=>'form-control'
+                )
+            ))
+
+
+
+
+
 
 
         ;

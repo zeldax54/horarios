@@ -55,6 +55,20 @@ class Configuracion
      */
     private $climaelemntTime;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="noticiasUpdateTime", type="integer")
+     */
+    private $noticiasUpdateTime;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="horariosUpdateTime", type="integer")
+     */
+    private $horariosUpdateTime;
+
 
 
 
@@ -186,5 +200,53 @@ class Configuracion
     public function getClimaelemntTime()
     {
         return $this->climaelemntTime;
+    }
+
+    /**
+     * Set noticiasUpdateTime
+     *
+     * @param integer $noticiasUpdateTime
+     *
+     * @return Configuracion
+     */
+    public function setNoticiasUpdateTime($noticiasUpdateTime)
+    {
+        $this->noticiasUpdateTime = $noticiasUpdateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get noticiasUpdateTime
+     *
+     * @return integer
+     */
+    public function getNoticiasUpdateTime()
+    {
+        return $this->noticiasUpdateTime;
+    }
+
+    /**
+     * Set horariosUpdateTime
+     *
+     * @param integer $horariosUpdateTime
+     *
+     * @return Configuracion
+     */
+    public function setHorariosUpdateTime($horariosUpdateTime)
+    {
+        $this->horariosUpdateTime = $horariosUpdateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get horariosUpdateTime
+     *
+     * @return integer
+     */
+    public function getHorariosUpdateTime()
+    {
+        return $this->horariosUpdateTime;
     }
 }
