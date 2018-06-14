@@ -11,7 +11,7 @@
  Target Server Version : 100109
  File Encoding         : 65001
 
- Date: 31/05/2018 09:14:24
+ Date: 14/06/2018 15:33:28
 */
 
 SET NAMES utf8mb4;
@@ -116,13 +116,15 @@ CREATE TABLE `configuracion`  (
   `urlxmlcintillo` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `sliderelemntTime` int(11) NOT NULL,
   `climaelemntTime` int(11) NOT NULL,
+  `noticiasUpdateTime` int(11) NOT NULL,
+  `horariosUpdateTime` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of configuracion
 -- ----------------------------
-INSERT INTO `configuracion` VALUES (1, 'http://localhost:81/horarioxml/horarios.php?area=', 'http://localhost/tutiempo/xml/30994.xml', 'http://localhost/noticias/ultimasnoticias.xml', 1, 30);
+INSERT INTO `configuracion` VALUES (1, 'http://localhost:81/horarioxml/horarios.php?area=', 'http://localhost/tutiempo/xml/30994.xml', 'http://localhost/noticias/ultimasnoticias2.xml', 1, 1, 720, 720);
 
 -- ----------------------------
 -- Table structure for fos_user
@@ -150,7 +152,7 @@ CREATE TABLE `fos_user`  (
 -- ----------------------------
 -- Records of fos_user
 -- ----------------------------
-INSERT INTO `fos_user` VALUES (1, 'admin', 'admin', 'admin@admin.cu', 'admin@admin.cu', 1, NULL, '$2y$13$Z8pkUimpqL4PbgYmIeI87uqiLrCBc9n/wWjCv66ocf5isCaGxFxFa', '2018-05-30 18:57:21', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}');
+INSERT INTO `fos_user` VALUES (1, 'admin', 'admin', 'admin@admin.cu', 'admin@admin.cu', 1, NULL, '$2y$13$Z8pkUimpqL4PbgYmIeI87uqiLrCBc9n/wWjCv66ocf5isCaGxFxFa', '2018-06-03 00:39:51', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}');
 
 -- ----------------------------
 -- Table structure for media__gallery

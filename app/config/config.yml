@@ -42,7 +42,7 @@ twig:
     globals:
 #        admin_skin: skin-red
     paths:
-        '%kernel.root_dir%/../src/AppBundle/Resources/Views': adminViews
+        '%kernel.root_dir%/../src/AppBundle/Resources/views': adminViews
 
 # Doctrine Configuration
 doctrine:
